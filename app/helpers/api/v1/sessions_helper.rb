@@ -1,6 +1,6 @@
 module Api::V1::SessionsHelper
   def current_user
-    @current_user = User.find_by(auth_token: response.request.env['HTTP_AUTH_TOKEN'])
+    response.request.env['HTTP_AUTH_TOKEN'] ? User.find_by(auth_token: response.request.env['HTTP_AUTH_TOKEN']) : nil
   end
 
   def logged_in?
