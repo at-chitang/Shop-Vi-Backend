@@ -14,7 +14,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :uid
       t.string :auth_token
       t.string :token
-      t.date :active
+      t.date :confirm_at
 
       t.timestamps
     end

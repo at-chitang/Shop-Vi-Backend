@@ -15,6 +15,13 @@
 #
 
 class User < ApplicationRecord
+  extend FriendlyId
+  friendly_id :generated_slug, use: :slugged
+  require 'securerandom'
+  def generated_slug
+    @random_slug ||= persisted? ? friendly_id : SecureRandom.hex(15)
+  end
+
   has_secure_password
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'wrong email format' },
                     uniqueness: true, presence: true, on: :create

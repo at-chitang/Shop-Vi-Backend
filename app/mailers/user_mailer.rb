@@ -1,8 +1,11 @@
 class UserMailer < ApplicationMailer
-  def register_email(email, link)
-    # @user[:confirm_send] = Time.now
-    @link1 = "http://172.17.19.156:3000/v1/confirms/#{link}"
-    @link2 = "http://0.0.0.0:3000/v1/confirms/#{link}"
+  def register_email(email, token)
+    @token = token
     mail(to: email, subject: 'Welcome to Website')
+  end
+
+  def reset_password_email(email, token)
+    @token = token
+    mail(to: email, subject: 'Reset your acount\'s password')
   end
 end

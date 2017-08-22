@@ -1,17 +1,18 @@
 class Api::V1::ConfirmsController < ApplicationController
   def update
-    @user = user_token
-    if @user
-      if @user.active
-        messenger = { messenger: 'User had already confirm', status: 201 }
-      elsif Time.now - @user.updated_at < 3.days
-        @user.update!(active: Time.now)
-        messenger = { messenger: 'Confirm success', status: 200 }
+    user = user_token
+    if user
+      if user.confirm_at
+        messenger = { messenger: 'User had already confirm', status: 200 }
+      elsif Time.now - user.updated_at < 3.days
+        user.update!(confirm_at: Time.now, token: nil)
+        messenger = { messenger: 'Confirm success', status: 202 }
       else
-        messenger = { messenger: 'Confirm late than 3 days', status: 501 }
+        messenger = { messenger: 'Confirm expired', status: 403 }
+        user.update!(token: nil)
       end
     else
-      messenger = { messenger: 'Invalid token', status: 502 }
+      messenger = { messenger: 'Invalid token', status: 404 }
     end
     render json: messenger
   end
