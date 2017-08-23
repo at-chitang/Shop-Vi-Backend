@@ -6,6 +6,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     user = User.new(user_create_params)
     user.token = SecureRandom.urlsafe_base64.to_s
+    user.create_token_at = Time.now
     if user.save
       UserMailer.register_email(user.email, user.token).deliver_later
       message = { message: 'Create account success!', status: 201 }
@@ -16,10 +17,23 @@ class Api::V1::UsersController < ApplicationController
     render json: message
   end
 
-  def update(user = current_user, update = true)
-    # user ||= User.find_by(auth_token: params[:auth_token])
+  def show
+    user = User.find_by(slug: slug_params[:id])
     if user
-      user.update(user_update_params)
+      data = if user == current_user
+               user
+             else
+               { email: user.email, first_name: user.first_name, last_name: user.last_name }
+             end
+      render json: data
+    else
+      render json: { message: 'Not found user!', status: 404 }
+    end
+  end
+
+  def update(user = current_user, update = true)
+    if user
+      user.update!(user_update_params)
       message = { message: 'Update successed!', status: 202 }
     else
       message = { message: 'Not found user!', status: 404 }
@@ -41,5 +55,9 @@ class Api::V1::UsersController < ApplicationController
 
   def user_update_params
     params.permit(:first_name, :last_name, :phone, :address, :province, :zipcode, :country)
+  end
+
+  def slug_params # use for get sulg
+    params.permit(:id)
   end
 end

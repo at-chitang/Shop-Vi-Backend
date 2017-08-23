@@ -2,8 +2,7 @@ class Api::V1::SessionsController < ApplicationController
   # before_action :logged_in?, only: :destroy
 
   def create
-    user = User.find_by_email(params[:email])
-    # binding.pry
+    user = User.find_by(email_params)
     if user && user.authenticate(params[:password])
       if user.confirm_at
         user.update_columns(auth_token: SecureRandom.hex, token: nil)
@@ -19,15 +18,23 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(params[:id])
-    # binding.pry
+    user = current_user
     if user
-      user.update_columns(auth_token: nil) if user.auth_token == response.request.env['HTTP_AUTH_TOKEN']
+      user.update_columns(auth_token: nil)
       message = { message: 'You logged out!', status: 200 }
-      render json: message
     else
-      error = { message: 'Invalid user!', status: 404 }
-      render json: error
+      message = { message: 'Invalid user!', status: 404 }
     end
+    render json: message
+  end
+
+  private
+
+  def email_params
+    params.permit(:email)
+  end
+
+  def id_params
+    params.permit(:id)
   end
 end

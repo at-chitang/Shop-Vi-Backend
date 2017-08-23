@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20170822082400) do
     t.string "password_digest", null: false
     t.string "first_name"
     t.string "last_name"
+    t.date "birthday"
     t.string "phone"
     t.integer "gender", default: 0
     t.string "address"
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170822082400) do
     t.string "auth_token"
     t.string "token"
     t.date "confirm_at"
+    t.datetime "create_token_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"

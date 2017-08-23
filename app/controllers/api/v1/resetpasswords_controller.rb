@@ -5,7 +5,7 @@ class Api::V1::ResetpasswordsController < ApplicationController
     user = User.find_by(user_email_params)
     if user
       if user.confirm_at
-        user.token = SecureRandom.urlsafe_base64.to_s
+        user.update!(token: SecureRandom.urlsafe_base64.to_s, create_token_at: Time.now)
         UserMailer.reset_password_email(user.email, user.token).deliver_later
         message = { message: 'Email sent!', status: 202 }
       else
