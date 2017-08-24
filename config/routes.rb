@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     # match '/foos.(:format)' => 'foos#index', :via => :get
     # match '/foos_no_format' => 'foos#index', :via => :get
 
-    resources :users
+    resource :users
 
     post '/register', to: 'users#create', as: 'register'
 

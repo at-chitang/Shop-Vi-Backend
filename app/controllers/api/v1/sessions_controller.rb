@@ -6,7 +6,7 @@ class Api::V1::SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       if user.confirm_at
         user.update_columns(auth_token: SecureRandom.hex, token: nil)
-        render json: user, serializer: Users::UserSerializer
+        render json: { auth_token: user.auth_token, status: 200 }
       else
         message = { message: 'Please confirm your acount', status: 405 }
         render json: message

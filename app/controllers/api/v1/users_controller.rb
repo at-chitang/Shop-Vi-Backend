@@ -10,7 +10,6 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       UserMailer.register_email(user.email, user.token).deliver_later
       message = { message: 'Create account success!', status: 201 }
-      message['update'] = update(user, false)
     else
       message = { message: user.errors.full_messages, status: 409 }
     end
@@ -18,23 +17,27 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    user = User.find_by(slug: slug_params[:id])
+    user = current_user
     if user && user == current_user_test
-      render json: user, serializer: Users::UserProfileSerializer
+      render json: user, serializer: Users::ShowSerializer
     else
       render json: { message: 'Not found user!', status: 404 }
     end
   end
 
-  def update(user = current_user, update = true)
-    if user
-      user.update!(user_update_params)
-      message = { message: 'Update successed!', status: 202 }
-    else
-      message = { message: 'Not found user!', status: 404 }
-    end
-    render json: message if update
-    message
+  def update
+    user = current_user
+    message = if user
+                if user.update(user_update_params)
+                  { message: 'Update successed!', status: 202 }
+                else
+                  { message: 'Update failt!', status: 409 }
+                end
+              else
+                { message: 'Not found user!', status: 404 }
+              end
+    message['errors'] = user.errors.full_messages
+    render json: message
   end
 
   def destroy
@@ -44,15 +47,10 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_create_params
-    # params.permit(:email, :password, :first_name, :last_name, :phone, :address, :province, :zipcode, :country)
-    params.permit(:email, :password, :password_confirmation)
+    params.permit(:email, :password, :password_confirmation, :first_name, :last_name)
   end
 
   def user_update_params
     params.permit(:first_name, :last_name, :phone, :address, :province, :zipcode, :country)
-  end
-
-  def slug_params # use for get sulg
-    params.permit(:id)
   end
 end

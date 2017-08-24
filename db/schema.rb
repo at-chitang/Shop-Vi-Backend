@@ -30,8 +30,6 @@ ActiveRecord::Schema.define(version: 20170822082400) do
     t.datetime "create_token_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "slug"
-    t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
 end
