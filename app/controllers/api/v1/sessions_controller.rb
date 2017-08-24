@@ -33,8 +33,4 @@ class Api::V1::SessionsController < ApplicationController
   def email_params
     params.permit(:email)
   end
-
-  def id_params
-    params.permit(:id)
-  end
 end

@@ -46,11 +46,5 @@ class User < ApplicationRecord
     errors.add(:gender, 'must be between 0 - 2') unless gender.between(0..2)
   end
 
-  # after_initialize :defaults, unless: :persisted?
-
-  # def defaults
-  #   self.gender ||= 0
-  # end
-
   enum gender: ['Nam', 'Nữ', 'Ngại quá à']
 end

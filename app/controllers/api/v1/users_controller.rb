@@ -19,13 +19,8 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.find_by(slug: slug_params[:id])
-    if user
-      data = if user == current_user
-               user
-             else
-               { email: user.email, first_name: user.first_name, last_name: user.last_name }
-             end
-      render json: data
+    if user && user == current_user_test
+      render json: user, serializer: Users::UserProfileSerializer
     else
       render json: { message: 'Not found user!', status: 404 }
     end

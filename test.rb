@@ -1,13 +1,7 @@
-require 'sidekiq/api'
+user = {}
+user[:email] = 'ok'
+info = %i[email first_name last_name birthday phone gender address province zipcode]
 
-# 1. Clear retry set
+p info.map { |i| [i, user[i]] }.to_h
 
-Sidekiq::RetrySet.new.clear
-
-# 2. Clear scheduled jobs
-
-Sidekiq::ScheduledSet.new.clear
-
-# 3. Clear 'Processed' and 'Failed' jobs statistics (OPTIONAL)
-
-Sidekiq::Stats.new.reset
+p info
