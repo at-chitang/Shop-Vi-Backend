@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170823085029) do
+ActiveRecord::Schema.define(version: 20170823105251) do
+
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.text "description"
+    t.float "price", limit: 24
+    t.string "unit"
+    t.integer "in_stock"
+    t.json "detail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "shop_managers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "username"
@@ -42,6 +59,7 @@ ActiveRecord::Schema.define(version: 20170823085029) do
     t.string "password_digest", null: false
     t.string "first_name"
     t.string "last_name"
+    t.date "birthday"
     t.string "phone"
     t.integer "gender", default: 0
     t.string "address"
@@ -50,7 +68,8 @@ ActiveRecord::Schema.define(version: 20170823085029) do
     t.string "uid"
     t.string "auth_token"
     t.string "token"
-    t.date "active"
+    t.date "confirm_at"
+    t.datetime "create_token_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

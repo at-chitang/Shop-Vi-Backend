@@ -36,6 +36,7 @@ gem 'rack-cors'
 gem 'active_model_serializers'
 gem 'redis-namespace'
 gem 'sidekiq'
+gem 'friendly_id'
 
 group :development, :test do
   gem 'faker'
