@@ -18,7 +18,7 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = current_user
-    if user && user == current_user_test
+    if user
       render json: user, serializer: Users::ShowSerializer
     else
       render json: { message: 'Not found user!', status: 404 }

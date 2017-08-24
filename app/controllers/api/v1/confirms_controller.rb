@@ -11,7 +11,6 @@ class Api::V1::ConfirmsController < ApplicationController
         user.update!(token: SecureRandom.urlsafe_base64.to_s)
         UserMailer.register_email(user.email, user.token).deliver_later
         messenger = { messenger: 'Confirm expired', status: 403 }
-        user.update!(token: nil)
       end
     else
       messenger = { messenger: 'Invalid token', status: 404 }

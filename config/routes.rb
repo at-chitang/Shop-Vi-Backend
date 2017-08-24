@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     delete '/logout', to: 'sessions#destroy', as: 'logout'
     get '/confirms/:token', to: 'confirms#update', as: 'confirm'
 
-    resources :resetpasswords, only: %i[index show create update]
+    resources :reset_passwords, only: %i[index show create update]
   end
 end
