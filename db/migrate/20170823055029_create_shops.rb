@@ -5,7 +5,8 @@ class CreateShops < ActiveRecord::Migration[5.1]
       t.string      :logo
       t.string      :phone
       t.string      :address
-      t.integer     :status, default: 0
+      t.integer     :status,  default: 0
+
       t.timestamps
     end
   end

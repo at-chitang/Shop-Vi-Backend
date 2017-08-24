@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
-  validates :name, presence: true, uniqueness: { case_sensitive: true }
+  validates :name, presence: true, uniqueness: true
 
   has_many :products
 end

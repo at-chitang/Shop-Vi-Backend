@@ -22,6 +22,6 @@ class ShopManager < ApplicationRecord
   end
 
   def update_role
-    self.manager_id = 0 unless shop_employee?
+    self.manager_id = nil unless shop_employee?
   end
 end

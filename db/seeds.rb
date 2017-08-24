@@ -12,5 +12,5 @@
 #   )
 # end
 
-User.create!(email: 'test@gmail.com', password: '12345678', confirm_at: Time.now);
-User.create!(email: 'a@b.c', password: '12345678', token: 'abc');
+User.create!(email: 'test@gmail.com', password: '12345678', confirm_at: Time.now, first_name: 'a', last_name: 'b');
+# User.create!(email: 'a@b.c', password: '12345678', token: 'abc');
