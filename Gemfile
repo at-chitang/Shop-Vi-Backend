@@ -38,9 +38,9 @@ gem 'redis-namespace'
 gem 'sidekiq'
 gem 'friendly_id'
 gem 'pg'
+gem 'faker'
 
 group :development, :test do
-  gem 'faker'
   gem 'annotate'
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
