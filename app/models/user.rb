@@ -21,7 +21,7 @@ class User < ApplicationRecord
                     uniqueness: true, presence: true, on: :create
 
   # on update
-  validate :birthday?, allow_nil: true, on: :update
+  validate :birthday?, on: :update
   validates :phone, allow_nil: true, format: { with: /\A[0-9]{8,16}\z/, message: 'only number' }, on: :update
   validates :address, allow_nil: true, format: { with: /\A[\w\.\,\s]+\z/, message: 'only character and comma' }, on: :update
   validates :province, allow_nil: true, format: { with: /\A[\w\s]+\z/, message: 'only character' }, on: :update
@@ -34,5 +34,5 @@ class User < ApplicationRecord
     errors.add(:birthday, 'must be over 16 years old') if birthday.present? && Time.now - 16.year < birthday
   end
 
-  enum gender: ['Nam', 'Nữ', 'Ngại quá à']
+  enum gender: %i[Male Female Other]
 end

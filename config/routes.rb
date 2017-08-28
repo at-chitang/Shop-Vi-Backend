@@ -13,5 +13,7 @@ Rails.application.routes.draw do
     get '/confirms/:token', to: 'confirms#update', as: 'confirm'
 
     resources :reset_passwords, only: %i[index show create update]
+
+    resources :shops
   end
 end
