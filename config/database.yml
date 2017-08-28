@@ -23,5 +23,6 @@ test:
   database: shop_vi_test
 
 production:
-  <<: *default
-  database: shop_vi_production
+  # <<: *default
+  # database: shop_vi_production
+  url: <%= ENV['DATABASE_URL'] %>
