@@ -1,7 +1,7 @@
 class Shop < ApplicationRecord
-  validates :name, :logo, :phone, :address, presence: true
-  validates :name, uniqueness: true
+  validates :shop_name, :logo, :phone, :address, presence: true
+  validates :shop_name, uniqueness: true
 
-  has_many :shop_managers
-  has_many :product
+  has_many :managers
+  has_many :products
 end

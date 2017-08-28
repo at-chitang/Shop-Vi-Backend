@@ -15,5 +15,7 @@ Rails.application.routes.draw do
     resources :reset_passwords, only: %i[index show create update]
 
     resources :shops
+    resources :managers
+    resources :products
   end
 end
