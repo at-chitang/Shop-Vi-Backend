@@ -18,5 +18,7 @@ Rails.application.routes.draw do
     resources :managers
     resources :products
     resources :categories
+    get '/products_by_categories/:id', to: 'products_by_categories#show'
+    get '/find_products/:id', to: 'find_products#show'
   end
 end

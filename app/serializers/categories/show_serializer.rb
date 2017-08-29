@@ -1,5 +1,5 @@
 class Categories::ShowSerializer < ActiveModel::Serializer
-  attributes :name, :slug, :child_categories
-  has_many :child_categories, class_name: Category.name, foreign_key: :parent_id,
-                              serializer: Categories::ChildCategoriesSerializer
+  attributes :name, :slug, :children
+  has_many :children, class_name: Category.name, foreign_key: :parent_id,
+                      serializer: Categories::ChildCategoriesSerializer
 end
