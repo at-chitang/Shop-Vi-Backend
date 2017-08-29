@@ -1,6 +1,6 @@
 module Api::V1
   class CategoriesController < ApplicationController
-    before_action :get_category, only: %i[show update destroy]
+    before_action :take_category, only: %i[show update destroy]
 
     def index
       render json: Category.where(parent_id: 0), each_serializer: Categories::CategoriesSerializer
@@ -25,14 +25,14 @@ module Api::V1
 
     def update
       message = if @category
-        if @category.update(category_params)
-          { message: 'Update successed!', status: 202 }
-        else
-          { message: 'Update failt!', status: 409 }
-        end
-      else
-        { message: 'Not found user!', status: 404 }
-      end
+                  if @category.update(category_params)
+                    { message: 'Update successed!', status: 202 }
+                  else
+                    { message: 'Update failt!', status: 409 }
+                  end
+                else
+                  { message: 'Not found user!', status: 404 }
+                end
       message['errors'] = @category.errors.full_messages
       render json: message
     end
@@ -47,7 +47,7 @@ module Api::V1
 
     private
 
-    def get_category
+    def take_category
       @category = Category.find_by slug: params[:id]
     end
 
