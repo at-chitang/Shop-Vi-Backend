@@ -35,4 +35,19 @@ class User < ApplicationRecord
   end
 
   enum gender: %i[Male Female Other]
+
+  has_many :carts
+  has_many :product_in_carts, through: :carts, source: :product
+
+  def cart_detail
+    product_lists = Hash.new
+    carts.each do |cart|
+      product_lists[cart] = {
+        product: cart.product,
+        quantity: cart.quantity
+      }
+    end
+
+    binding.pry
+  end
 end

@@ -1,36 +1,34 @@
-# User.create!(email: 'test@gmail.com', password: '12345678', active: Time.now);
-# User.create!(email: 'a@b.c', password: '12345678', token: 'abc');
-# 15.times do
-#   ShopManager.create!(
-#     username:   Faker::Twitter.screen_name,
-#     password:   '12345678',
-#     role:       Faker::Number.between(1, 2),
-#     gender:     Faker::Number.between(0, 2),
-#     avatar:     Faker::Avatar.image('my-own-slug', '100x100'),
-#     phone:      Faker::PhoneNumber.phone_number,
-#     manager_id: Faker::Number.between(1, 4)
-#   )
-# end
+print 'User              : '
+if User.exists? || User.find_by(email: 'test@gmail.com')
+  puts 'already exist'
+ else
+  User.create!(email: 'test@gmail.com', first_name: 'test', last_name: 'test', password: '12345678', confirm_at: Time.now);
+  User.create!(email: 'a@b.c', first_name: 'a', last_name: 'b', password: '12345678', token: 'abc');
+  puts 'created done'
+end
 
+print 'Unit              : '
 if Unit.exists?
-  puts 'Unit already exist'
+  puts 'already exist'
 else
   Unit.create!(name: 'Peace')
   Unit.create!(name: 'Set')
-  puts 'Unit created done'
+  puts 'created done'
 end
 
+print 'Shop              : '
 if Shop.exists?
-  puts 'Shop already exist'
+  puts 'already exist'
 else
   Shop.create!(id: 1, shop_name: 'Shop Vi', logo: 'logo', phone: '012345678', address: 'asian tech', status: 'ok')
   Shop.create!(id: 2, shop_name: 'Shop Vinh', logo: 'logo', phone: '012345678', address: 'asian tech', status: 'ok')
   Shop.create!(id: 3, shop_name: 'Shop Chi', logo: 'logo', phone: '012345678', address: 'asian tech', status: 'ok')
-  puts 'Shop created done'
+  puts 'created done'
 end
 
+print 'Category          : '
 if Category.exists?
-  puts 'Category already exist'
+  puts 'already exist'
 else
   category = {}
   category['Electronics'] = [
@@ -55,7 +53,6 @@ else
     'Storage & Organization'
   ]
 
-  print 'Category :         '
   category.each do |i|
     Category.create!(name: i.first)
     now = Category.select('id').find_by(name: i.first).id
@@ -67,10 +64,10 @@ else
   puts 'Done'
 end
 
+print "Product           : "
 if Product.all.size > 101
-  puts 'Product already exist'
+  puts 'already exist'
 else
-  print "Product :          "
   unit_count = Unit.count
   shop_count = Shop.count
   category_count = Category.count
@@ -84,11 +81,11 @@ else
       quantity_stock: Faker::Number.number(3),
       description: Faker::Book.author,
       detail: '1234 nay'
-      )
+    )
     print '.' if( i % 5 == 0 )
   end
   puts 'Done'
-  print "Product image:     "
+  print "Product image     : "
   Product.all.each_with_index do |i, j|
     ProductImage.create!(
         url: Faker::Avatar.image(i.slug,"200x200"),
@@ -98,14 +95,27 @@ else
   end
   2.times do |i|
     ProductImage.create!(
-        url: Faker::Avatar.image(i,"200x200"),
-        product_id: 1
-      )
+      url: Faker::Avatar.image(i,"200x200"),
+      product_id: 1
+    )
   end
   puts 'Done'
 end
 
-
-
-# User.create!(email: 'test@gmail.com', password: '12345678', confirm_at: Time.now, first_name: 'a', last_name: 'b');
-# User.create!(email: 'a@b.c', password: '12345678', token: 'abc');
+print "Cart              : "
+if Cart.exists?
+  puts 'already exist'
+else
+  user_count = User.count
+  product_count = Product.count
+  category_count = Category.count
+  (product_count*2).times do |i|
+    Cart.create!(
+      user_id: 1+rand(user_count),
+      product_id: 1+rand(product_count),
+      quantity: 1+rand(9),
+    )
+    print '.' if( i % 5 == 0 )
+  end
+  puts 'Done'
+end
