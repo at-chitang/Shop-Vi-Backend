@@ -1,7 +1,7 @@
 module Api::V1
   class ProductsByCategoriesController < ApplicationController
     def show
-      category = Category.find_by(slug: params[:id])
+      category = Category.find_by(slug: params[:id].downcase.strip)
       if category
         list_product = category.products
         category.children.each do |i|

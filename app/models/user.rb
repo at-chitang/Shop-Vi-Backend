@@ -40,14 +40,20 @@ class User < ApplicationRecord
   has_many :product_in_carts, through: :carts, source: :product
 
   def cart_detail
-    product_lists = Hash.new
-    carts.each do |cart|
-      product_lists[cart] = {
-        product: cart.product,
-        quantity: cart.quantity
-      }
-    end
+    query = <<-SQL
+      SELECT DISTINCT
+        products.name as product_name,
+        products.quantity_stock,
+        shops.shop_name,
+        carts.quantity,
+        units.name as unit
+      FROM products
+      INNER JOIN carts ON products.id = carts.product_id
+      INNER JOIN shops ON products.shop_id = shops.id
+      INNER JOIN units ON products.unit_id = units.id
+      WHERE carts.user_id = 1
+    SQL
 
-    binding.pry
+    ActiveRecord::Base.connection.execute(query)
   end
 end

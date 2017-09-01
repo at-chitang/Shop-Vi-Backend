@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     # match '/foos.(:format)' => 'foos#index', :via => :get
     # match '/foos_no_format' => 'foos#index', :via => :get
 
-    resource :users
+    resource :users do
+      resource :carts, only: %i[index show create update]
+    end
 
     post '/register', to: 'users#create', as: 'register'
 

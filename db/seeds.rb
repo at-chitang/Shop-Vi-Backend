@@ -3,6 +3,7 @@ if User.exists? || User.find_by(email: 'test@gmail.com')
   puts 'already exist'
  else
   User.create!(email: 'test@gmail.com', first_name: 'test', last_name: 'test', password: '12345678', confirm_at: Time.now);
+  User.create!(email: 'a@a.a', first_name: 'a', last_name: 'a', password: '12345678', auth_token: 'a', confirm_at: Time.now);
   User.create!(email: 'a@b.c', first_name: 'a', last_name: 'b', password: '12345678', token: 'abc');
   puts 'created done'
 end
@@ -110,12 +111,12 @@ else
   product_count = Product.count
   category_count = Category.count
   (product_count*2).times do |i|
-    Cart.create!(
+    cart = Cart.new(
       user_id: 1+rand(user_count),
       product_id: 1+rand(product_count),
       quantity: 1+rand(9),
     )
-    print '.' if( i % 5 == 0 )
+    print cart.save ? '.' : 'x'
   end
   puts 'Done'
 end
