@@ -105,7 +105,21 @@ end
 
 print "Cart              : "
 if Cart.exists?
-  puts 'already exist'
+  if User.first.carts.exists?
+    puts 'already exist'
+  else
+    product_count = Product.count
+    category_count = Category.count
+    10.times do |i|
+      cart = Cart.new(
+        user_id: 1,
+        product_id: 1+rand(product_count),
+        quantity: 1+rand(9),
+      )
+      print cart.save ? '.' : 'x'
+    end
+  end
+  puts 'Done'
 else
   user_count = User.count
   product_count = Product.count

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     resource :users do
       resource :carts, only: %i[show create update destroy]
+      resource :orders, only: %i[show create update destroy]
     end
 
     post '/register', to: 'users#create', as: 'register'

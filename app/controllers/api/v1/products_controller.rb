@@ -1,9 +1,9 @@
 class Api::V1::ProductsController < ApplicationController
   def index
-    render json: Product.all, each_serializer: Products::ListSerializer
+    render json: Product.includes(:product_image).all, each_serializer: Products::ListSerializer
   end
 
   def show
-    render json: Product.find(params[:id]), serializer: Products::ShowSerializer
+    render json: Product.includes(:product_images).find(params[:id]), serializer: Products::ShowSerializer
   end
 end

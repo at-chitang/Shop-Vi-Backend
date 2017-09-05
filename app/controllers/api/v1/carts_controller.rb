@@ -26,7 +26,7 @@ class Api::V1::CartsController < ApplicationController
       else
         quantity = check_quantity(params[:quantity], 0, product.quantity_stock)
         cart = Cart.create!(user_id: user.id, product_id: product.id, quantity: quantity)
-        render json: { message: cart.errors.full_messages, status: 200 }
+        render json: { message: cart.errors.full_messages[0], status: 200 }
       end
     else
       render json: { message: 'Connect denied!', status: 400 }
@@ -36,7 +36,7 @@ class Api::V1::CartsController < ApplicationController
   def update
     user = current_user_test
     product = Product.find_by(slug: params[:slug])
-    if user
+    if user && products
       # cart = user.carts.joins(:product).find_by('products.slug' => params[:slug])
       # cart = user.carts.joins(:product).find_by('products.id' => params[:id])
       cart = user.carts.find_by(product_id: product.id)
@@ -44,6 +44,8 @@ class Api::V1::CartsController < ApplicationController
         quantity = check_quantity(params[:quantity], cart.quantity, product.quantity_stock)
         message = cart.update(quantity: quantity)
         render json: { message: message, status: 200 }
+      else
+        render json: { message: 'Connect denied!', status: 400 }
       end
     else
       render json: { message: 'Connect denied!', status: 400 }
@@ -53,13 +55,15 @@ class Api::V1::CartsController < ApplicationController
   def destroy
     user = current_user_test
     product = Product.find_by(slug: params[:slug])
-    if user
+    if user && product
       # cart = user.carts.joins(:product).find_by('products.slug' => params[:slug])
       # cart = user.carts.joins(:product).find_by('products.id' => params[:id])
       cart = user.carts.find_by(product_id: product.id)
       if cart
         message = cart.delete
         render json: { message: message, status: 200 }
+      else
+        render json: { message: 'Connect denied!', status: 400 }
       end
     else
       render json: { message: 'Connect denied!', status: 400 }

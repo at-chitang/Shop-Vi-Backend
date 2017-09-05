@@ -5,7 +5,7 @@ module Api::V1
         s = params[:id].downcase.gsub(/\s+/, '%').strip
         s = "%#{s}%"
         products = Product.where('lower(name) like :key', key: s)
-        if products.size > 0
+        if products.empty?
           render json: products, each_serializer: Products::ListSerializer
         else
           render json: { message: 'No product match!', status: 400 }

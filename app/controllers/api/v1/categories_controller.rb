@@ -3,6 +3,8 @@ module Api::V1
     before_action :take_category, only: %i[show update destroy]
 
     def index
+      # @category_now
+      # update_category_now
       render json: Category.where(parent_id: nil), each_serializer: Categories::ShowSerializer
     end
 
@@ -47,12 +49,17 @@ module Api::V1
 
     private
 
+    def update_category_now
+      @category_now = render json: Category.where(parent_id: nil), each_serializer: Categories::ShowSerializer
+      binding.pry
+    end
+
     def take_category
       @category = Category.find_by(params[:id])
     end
 
     def category_params
-      params.permit params[:name]
+      params.permit(:name)
     end
   end
 end
