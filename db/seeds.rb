@@ -75,11 +75,11 @@ else
   50.times do |i|
     Product.create!(
       name: Faker::Book.title,
-      price: Faker::Number.number(5),
+      price: rand(100)/3.0,
       unit_id: 1+rand(unit_count),
       shop_id: 1+rand(shop_count),
       category_id: 1+rand(category_count),
-      quantity_stock: Faker::Number.number(3),
+      quantity_stock: rand(100),
       description: Faker::Book.author,
       detail: '1234 nay'
     )

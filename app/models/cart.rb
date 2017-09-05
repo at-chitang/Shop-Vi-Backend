@@ -1,5 +1,5 @@
 class Cart < ApplicationRecord
-  validates :quantity, numericality: { only_integer: true }
+  validates :quantity, numericality: { only_integer: true, greater_than: 0 }
   validates :product_id, uniqueness: { scope: :user_id, message: 'should update quantity' }, on: :create
 
   belongs_to :user

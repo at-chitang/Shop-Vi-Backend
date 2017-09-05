@@ -42,16 +42,22 @@ class User < ApplicationRecord
   def cart_detail
     query = <<-SQL
       SELECT DISTINCT
-        products.name as product_name,
+        products.name AS product_name,
         products.quantity_stock,
+        products.price,
         shops.shop_name,
         carts.quantity,
-        units.name as unit
+        units.name AS unit,
+        product_images.url,
+        products.slug AS product_slug,
+        shops.slug AS shop_slug
       FROM products
       INNER JOIN carts ON products.id = carts.product_id
       INNER JOIN shops ON products.shop_id = shops.id
       INNER JOIN units ON products.unit_id = units.id
+      LEFT OUTER JOIN product_images ON products.id = product_images.product_id
       WHERE carts.user_id = 1
+      ORDER BY products.name
     SQL
 
     ActiveRecord::Base.connection.execute(query)
