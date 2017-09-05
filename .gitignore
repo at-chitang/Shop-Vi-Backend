@@ -25,5 +25,6 @@
 
 .byebug_history
 /Gemfile.lock
-
 /test.rb
+
+/database.yml

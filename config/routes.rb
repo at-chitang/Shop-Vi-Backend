@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get     '/login', to: 'sessions#new', as: 'login'
+    post    'sessions/create'
+    delete  '/logout', to: 'sessions#destroy', as: 'logout'
+  end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   api_version(module: 'api/V1', path: { value: 'v1' }) do
     # match '/foos.(:format)' => 'foos#index', :via => :get

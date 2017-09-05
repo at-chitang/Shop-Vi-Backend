@@ -1,6 +1,7 @@
 class CreateManagers < ActiveRecord::Migration[5.1]
   def change
     create_table :managers do |t|
+      t.string      :email
       t.string      :manager_name
       t.string      :password_digest
       t.integer     :role,            default: 1
