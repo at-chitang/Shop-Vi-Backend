@@ -10,10 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
-//= require gentelella
-//= require gentelella-custom
+//= require jquery.min
+//= require js/bootstrap.min
+//= require metisMenu.min
+//= require raphael.min
+//= require morris.min.js
