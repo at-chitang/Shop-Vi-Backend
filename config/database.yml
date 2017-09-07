@@ -5,11 +5,11 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: mysql2
-  username: root
-  password: s
+  adapter: postgresql
+  encoding: unicode
+  username: thanhvinh
+  password: '0101'
   pool: 5
-  timeout: 5000
 
 development:
   <<: *default
@@ -23,5 +23,6 @@ test:
   database: shop_vi_test
 
 production:
-  <<: *default
-  database: shop_vi_production
+  # <<: *default
+  # database: shop_vi_production
+  url: <%= ENV['DATABASE_URL'] %>

@@ -1,0 +1,70 @@
+<% provide(:title, 'Your profile') %>
+<% provide(:page_header, 'Your profile') %>
+<div class="row">
+  <div class="toppad">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= @user.manager_name %></h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 col-lg-3 " align="center">
+            <%= cl_image_tag(@user.avatar, width: 100, height: 100, crop: :fill, class: 'img-responsive img-circle') %>            
+          </div>
+
+          <div class=" col-md-9 col-lg-9 ">
+            <table class="table table-user-information">
+              <tbody>
+                <tr>
+                  <td>Role:</td>
+                  <td><%= @user.role %></td>
+                </tr>
+                <tr>
+                  <td>Hire date:</td>
+                  <td><%= @user.created_at %></td>
+                </tr>
+                <tr>
+                  <td>Date of Birth</td>
+                  <td>...</td>
+                </tr>
+
+                <tr>
+                  <tr>
+                    <td>Gender</td>
+                    <td><%= @user.gender.capitalize %></td>
+                  </tr>
+                  <tr>
+                    <td>Home Address</td>
+                    <td>Kathmandu,Nepal</td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td><%= mail_to @user.email %></td>
+                  </tr>
+                  <td>Phone Number</td>
+                  <td><%= @user.phone %></td>
+
+                </tr>
+
+              </tbody>
+            </table>
+            <%= link_to  'My Sales Performance', admin_dashboard_url, class: 'btn btn-primary' %>
+            <%= link_to  'My Sales Performance', admin_dashboard_url, class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+        <span class="pull-right">
+          <%= link_to edit_admin_profile_url(@user), class: 'btn btn-sm btn-warning', type: 'button' do %>
+            <i class="glyphicon glyphicon-edit"></i>
+          <% end %>
+          <%= link_to  '#', class: 'btn btn-sm btn-danger', type: 'button'  do %>
+            <i class="glyphicon glyphicon-remove"></i>
+          <% end %>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>

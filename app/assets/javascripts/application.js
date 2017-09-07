@@ -13,3 +13,9 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+//= require jquery.min
+//= require js/bootstrap.min
+//= require metisMenu.min
+//= require raphael.min
+//= require morris.min.js
+//= require cloudinary
