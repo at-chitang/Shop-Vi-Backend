@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get     '/admin/login',   to: 'sessions#new'
+  post    '/admin/login',   to: 'sessions#create'
+  delete  '/admin/logout',  to: 'sessions#destroy'
+  
+  resources :avatar_uploaders
+
   namespace :admin do
     get     '/dashboard', to: 'dashboard#new', as: 'dashboard'
     resources :profiles, only: %i[show edit update destroy]

@@ -27,4 +27,5 @@
 /Gemfile.lock
 /test.rb
 
-/database.yml
+/config/database.yml
+/config/cloudinary.yml

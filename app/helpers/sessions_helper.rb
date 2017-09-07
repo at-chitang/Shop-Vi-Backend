@@ -13,6 +13,10 @@ module SessionsHelper
   end
 
   def logged_in?
+    if current_user.nil?
+      flash[:warning] = 'You must login first!'
+      redirect_to admin_login_url
+    end
     !current_user.nil?
   end
 end

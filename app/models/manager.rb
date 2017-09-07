@@ -1,12 +1,14 @@
 class Manager < ApplicationRecord
   before_validation :update_role, on: %i[create update]
-
+  GENDER = %w[male female other].freeze
+  ROLE = %w[admin shop_manager shop_employee].freeze
+  mount_uploader :avatar, AvatarUploader
   has_secure_password
 
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'wrong email format' },
                     uniqueness: true, presence: true, on: :create
   validates :manager_name, presence: true, uniqueness: { case_sensitive: true }
-  validates :password, presence: true, length: { in: 6..20 }
+  validates :password, presence: true, length: { in: 6..20 }, on: [:create]
   validates :phone, format: { with: /\A[0-9]{8,16}\z/, message: 'wrong format!' }
   validate  :validate_role
 

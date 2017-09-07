@@ -18,3 +18,4 @@
 //= require metisMenu.min
 //= require raphael.min
 //= require morris.min.js
+//= require cloudinary
