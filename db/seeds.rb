@@ -71,14 +71,15 @@ if Product.all.size > 101
 else
   unit_count = Unit.count
   shop_count = Shop.count
-  category_count = Category.count
+  category_id = Category.joins(:parent).select(:id)
+  category_count = category_id.size
   50.times do |i|
     Product.create!(
       name: Faker::Book.title,
       price: rand(100)/3.0,
       unit_id: 1+rand(unit_count),
       shop_id: 1+rand(shop_count),
-      category_id: 1+rand(category_count),
+      category_id: category_id[rand(category_count)].id,
       quantity_stock: rand(100),
       description: Faker::Book.author,
       detail: '1234 nay'
@@ -118,8 +119,8 @@ if Cart.exists?
       )
       print cart.save ? '.' : 'x'
     end
+    puts 'Done'
   end
-  puts 'Done'
 else
   user_count = User.count
   product_count = Product.count

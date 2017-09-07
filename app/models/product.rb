@@ -4,6 +4,7 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates :price, :quantity_stock, :description, :detail, presence: true
+  validates :quantity_stock, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   belongs_to :unit
   belongs_to :shop
