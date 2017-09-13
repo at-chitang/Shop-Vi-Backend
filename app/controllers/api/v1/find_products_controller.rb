@@ -6,12 +6,12 @@ module Api::V1
         s = "%#{s}%"
         products = Product.where('lower(name) like :key', key: s)
         if products.empty?
-          render json: products, each_serializer: Products::ListSerializer
+          render json: { message: 'No product match!', status: 404 }
         else
-          render json: { message: 'No product match!', status: 400 }
+          render json: products, each_serializer: Products::ListSerializer
         end
       else
-        message
+        render json: { message: 'Not thing!', status: 400 }
       end
     end
   end

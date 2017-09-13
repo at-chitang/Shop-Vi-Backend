@@ -7,7 +7,7 @@ module Api::V1
         category.children.each do |i|
           list_product << i.products
         end
-        render json: list_product.includes(:product_image), each_serializer: Products::ListSerializer
+        render json: list_product.includes(:product_image).includes(:shop), each_serializer: Products::ListSerializer
       else
         render json: { message: 'Wrong category!', status: 400 }
       end

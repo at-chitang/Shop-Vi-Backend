@@ -11,10 +11,11 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :carts
   has_many :product_images
+  has_many :orders
+  has_many :user_orders, through: :orders
+  has_many :users, through: :user_orders
   has_one :product_image
-  # has_many :orders
-  # has_many :user_orders, through: :orders
-  # has_many :users, through: :user_orders
+  has_one :cart
 
   def shop_name
     Shop.find(shop_id).shop_name

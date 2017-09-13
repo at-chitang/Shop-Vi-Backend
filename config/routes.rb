@@ -5,8 +5,10 @@ Rails.application.routes.draw do
     # match '/foos_no_format' => 'foos#index', :via => :get
 
     resource :users do
-      resource :carts, only: %i[show create update destroy]
-      resource :orders, only: %i[show create update destroy]
+      resource :carts, only: %i[show create update destroy] do
+        get '/count', to: 'carts#count'
+      end
+      resources :orders
     end
 
     post '/register', to: 'users#create', as: 'register'

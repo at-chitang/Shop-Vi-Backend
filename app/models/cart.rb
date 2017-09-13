@@ -5,6 +5,7 @@ class Cart < ApplicationRecord
   belongs_to :user
   belongs_to :product
   has_one :shop, through: :product
+  has_one :product_image, through: :product
 
   def product_detail
     Product.select(:slug, :name, :price, :quantity_stock).find_by(id: product_id).as_json

@@ -1,5 +1,6 @@
 class Products::ListSerializer < ActiveModel::Serializer
   attributes :name, :slug, :price, :quantity_stock
 
-  has_one :product_image, serializer: Products::GetUrlSerializer
+  belongs_to :shop, serializer: Shops::ProductDetailSerializer
+  has_one :product_image, serializer: Imagers::UrlSerializer
 end

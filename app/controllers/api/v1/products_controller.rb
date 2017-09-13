@@ -1,6 +1,6 @@
 class Api::V1::ProductsController < ApplicationController
   def index
-    render json: Product.includes(:product_image).all, each_serializer: Products::ListSerializer
+    render json: Product.includes(:product_image).includes(:shop).all, each_serializer: Products::ListSerializer
   end
 
   def show

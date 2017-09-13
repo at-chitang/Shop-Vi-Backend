@@ -38,28 +38,33 @@ class User < ApplicationRecord
 
   has_many :carts
   has_many :product_in_carts, through: :carts, source: :product
+  has_many :user_orders
+  has_many :orders, through: :user_orders
+  has_many :product_in_orders, through: :orders, source: :product
 
   def cart_detail
     query = <<-SQL
-      SELECT DISTINCT
-        products.name AS product_name,
+      SELECT
+        products.name "product_name",
         products.quantity_stock,
         products.price,
-        shops.shop_name,
-        carts.quantity,
-        units.name AS unit,
-        product_images.url,
-        products.slug AS product_slug,
-        shops.slug AS shop_slug
+        shops.shop_name AS "shop_name",
+        carts.quantity quantity,
+        units.name unit,
+        product_images.url image,
+        products.slug "product_slug",
+        shops.slug "shop_slug"
       FROM products
       INNER JOIN carts ON products.id = carts.product_id
       INNER JOIN shops ON products.shop_id = shops.id
       INNER JOIN units ON products.unit_id = units.id
       LEFT OUTER JOIN product_images ON products.id = product_images.product_id
-      WHERE carts.user_id = 1
+      WHERE carts.user_id = #{id}
+      GROUP BY products.id
       ORDER BY products.name
     SQL
 
     ActiveRecord::Base.connection.execute(query)
+    # Product.joins(:carts).joins(:shop).joins(:product_image).where('carts.user_id = 1').group('products.id')
   end
 end
