@@ -3,11 +3,9 @@ module Api::V1
     def show
       category = Category.find_by(slug: params[:id].downcase.strip)
       if category
-        list_product = category.products
-        category.children.each do |i|
-          list_product << i.products
-        end
-        render json: list_product.includes(:product_image).includes(:shop), each_serializer: Products::ListSerializer
+        render json: Product.includes(:product_image).includes(:shop).joins(:category)
+          .where('categories.id = :id OR categories.parent_id = :id', id: category.id).order('quantity_stock DESC, name'),
+               each_serializer: Products::ListSerializer
       else
         render json: { message: 'Wrong category!', status: 400 }
       end
